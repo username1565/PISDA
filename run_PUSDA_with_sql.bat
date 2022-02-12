@@ -1,1 +1,1 @@
-PUPSA.exe "test.db" "Select * from AllTypes WHERE ID = 1"
+PUSDA.exe "test.db" "Select * from AllTypes WHERE ID = 1"
