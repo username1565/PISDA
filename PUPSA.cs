@@ -1299,6 +1299,7 @@ See results in ""log.txt"".
 ";
 				//Show usage:
 				Log(Usage);
+				Log("Press any key to continue...");
 				Console.ReadKey();
 
 				//run tests with "test.db"
