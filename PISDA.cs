@@ -4,7 +4,7 @@ using System.Data;			//DataSet and DataTable
 using System.Data.SQLite;	//System.Data.SQLite.dll - SQLite3 with Interop, inside.
 
 /*
-PUSDA - Provide Usage SQLite Data Access.
+PISDA - Provide Instant SQLite Data Access.
 
 	This program allow to do the following things:
 		1. Set DBFileName, or use already defined value.
@@ -20,8 +20,8 @@ PUSDA - Provide Usage SQLite Data Access.
 set fdir=%WINDIR%\Microsoft.NET\Framework
 set csc=%fdir%\v4.0.30319\csc.exe
 set msbuild=%fdir%\v4.0.30319\msbuild.exe
-%csc% /out:PUSDA.exe /reference:System.Data.SQLite.dll PUSDA.cs
-PUSDA.exe
+%csc% /out:PISDA.exe /reference:System.Data.SQLite.dll PISDA.cs
+PISDA.exe
 pause
 */
 
@@ -67,9 +67,9 @@ lock (db_lock)											//lock database to do some actions
 */			
 
 
-namespace PUSDA
+namespace PISDA
 {
-	class PUSDA
+	class PISDA
 	{
 		//Database FileName string
 		private static string _DBFileName = null;  				//Filename of database to connect it
@@ -91,8 +91,8 @@ namespace PUSDA
 			}
 		}
 		// To change this, use:
-		//	get:	string file = PUSDA.DBFileName;
-		//	set:	PUSDA.DBFileName = "filename.db3";
+		//	get:	string file = PISDA.DBFileName;
+		//	set:	PISDA.DBFileName = "filename.db3";
 
 		//Connection strins
 		private static string _ConnectionString = null;				//string to connect database
@@ -116,8 +116,8 @@ namespace PUSDA
 			}
 		}
 		// To change this, use:
-		//	get:	string str = PUSDA.ConnectionString;
-		//	set:	PUSDA.ConnectionString = "value";
+		//	get:	string str = PISDA.ConnectionString;
+		//	set:	PISDA.ConnectionString = "value";
 
 		//Connection to database
 		private static SQLiteConnection _Connection = null;		//SQLiteConnection to database.
@@ -156,7 +156,7 @@ namespace PUSDA
 		//	set: Connection = new SQLiteConnection(_ConnectionString);	//create new connection from _ConnectionString
 		
 		private static bool CloseConnections = false;	//true, by default, and connection will be closed after each operation.
-		//Or false, if need to keep connection: PUSDA.CloseConnections = false;
+		//Or false, if need to keep connection: PISDA.CloseConnections = false;
 
 		private static void CloseConnectionIfNeed(){
 			if(CloseConnections == true){
@@ -188,7 +188,7 @@ namespace PUSDA
 				_cmd = value;	//create new SQLiteCommand with sql
 			}
 		}
-		//	get: _cmd = PUSDA.cmd; //cmd will be created, if not exists
+		//	get: _cmd = PISDA.cmd; //cmd will be created, if not exists
 		//	set: cmd = new SQLiteCommand(sql, Connection); //create new and set
 		
 
@@ -718,7 +718,7 @@ namespace PUSDA
 
 			//================================================================================================================
 			Log("set \""+dbfile+"\" filename of DB, to let program regenerate the connection string.");
-			PUSDA.DBFileName = dbfile;	//set filename of DB, to let program regenerate the connection string.
+			PISDA.DBFileName = dbfile;	//set filename of DB, to let program regenerate the connection string.
 			Log("\""+dbfile+"\" was been set");
 			Log("");
 			System.Threading.Thread.Sleep(timeout);
@@ -730,7 +730,7 @@ namespace PUSDA
 
 			//================================================================================================================
 			File.WriteAllText("test.log", String.Empty);	//clear log-file
-			Log("Run tests of PUSDA...");
+			Log("Run tests of PISDA...");
 			Log("");
 			System.Threading.Thread.Sleep(timeout);
 			//================================================================================================================
@@ -789,7 +789,7 @@ COMMIT TRANSACTION;
 
 			//================================================================================================================
 			Log("Extract DataSet");
-			DataSet dataset = PUSDA.GetDataSet("SELECT * FROM tbl_userinfo");
+			DataSet dataset = PISDA.GetDataSet("SELECT * FROM tbl_userinfo");
 			LogDataSet(dataset);
 			Log("");
 			System.Threading.Thread.Sleep(timeout);
@@ -797,7 +797,7 @@ COMMIT TRANSACTION;
 
 			//================================================================================================================
 			Log("Extract DataTable");
-			DataTable datatable = PUSDA.GetDataTable("SELECT * FROM tbl_userinfo");
+			DataTable datatable = PISDA.GetDataTable("SELECT * FROM tbl_userinfo");
 			LogDataTable(datatable);
 			Log("");
 			System.Threading.Thread.Sleep(timeout);
@@ -806,11 +806,11 @@ COMMIT TRANSACTION;
 			//================================================================================================================
 			Log("Insert records");
 			int
-			i = PUSDA.ExecuteSQL("INSERT INTO tbl_userinfo (name, age, sex, contact, status) VALUES ('lol', 5, 'Male', 00000, 1)");
+			i = PISDA.ExecuteSQL("INSERT INTO tbl_userinfo (name, age, sex, contact, status) VALUES ('lol', 5, 'Male', 00000, 1)");
 			Log(i.ToString());
-			i = PUSDA.ExecuteSQL("INSERT INTO tbl_userinfo (name, age, sex, contact, status) VALUES ('lola', 5, 'Female', 00000, 1)");
+			i = PISDA.ExecuteSQL("INSERT INTO tbl_userinfo (name, age, sex, contact, status) VALUES ('lola', 5, 'Female', 00000, 1)");
 			Log(i.ToString());
-			i = PUSDA.ExecuteSQL("INSERT INTO tbl_userinfo (name, age, sex, contact, status) VALUES ('lol', 5, 'Male', 00000, 1)");
+			i = PISDA.ExecuteSQL("INSERT INTO tbl_userinfo (name, age, sex, contact, status) VALUES ('lol', 5, 'Male', 00000, 1)");
 			Log(i.ToString());
 			Log("");
 			System.Threading.Thread.Sleep(timeout);
@@ -1086,7 +1086,7 @@ COMMIT TRANSACTION;
 			
 
 			Log("Read record with all types");
-			datatable = PUSDA.GetDataTable("SELECT * FROM AllTypes WHERE id=2", true);
+			datatable = PISDA.GetDataTable("SELECT * FROM AllTypes WHERE id=2", true);
 			//Log(datatable);
 			Log("");
 			System.Threading.Thread.Sleep(timeout);	
@@ -1133,7 +1133,7 @@ COMMIT TRANSACTION;
 
 			Log("Type: SELECT * FROM AllTypes WHERE id=1");
 			string sql = Console.ReadLine();
-			datatable = PUSDA.ExecuteWithResults(sql);
+			datatable = PISDA.ExecuteWithResults(sql);
 			LogDataTable(datatable);
 			Log("");
 			System.Threading.Thread.Sleep(timeout);	
@@ -1179,7 +1179,7 @@ COMMIT TRANSACTION;
 				Log("Connection already open, so open again return throw Exception: "+ex.ToString());
 			}
 
-			PUSDA.CloseConnections = true;
+			PISDA.CloseConnections = true;
 			CloseConnectionIfNeed();
 			Log("_Connection.State: "+_Connection.State);
 			Log("");
@@ -1190,7 +1190,7 @@ COMMIT TRANSACTION;
 			Log("");
 			System.Threading.Thread.Sleep(timeout);
 
-			PUSDA.CloseConnections = false;
+			PISDA.CloseConnections = false;
 			CloseConnectionIfNeed();
 			Log("_Connection.State: "+_Connection.State);
 			OpenConnectionIfNeed();
@@ -1238,7 +1238,7 @@ COMMIT TRANSACTION;
 		{
 			//================================================================================================================
 			Log("set \""+dbfile+"\" filename of DB, to let program regenerate the connection string.");
-			PUSDA.DBFileName = dbfile;	//set filename of DB, to let program regenerate the connection string.
+			PISDA.DBFileName = dbfile;	//set filename of DB, to let program regenerate the connection string.
 			Log("\""+dbfile+"\" was been set");
 			Log("");
 			System.Threading.Thread.Sleep(1000);
@@ -1253,7 +1253,7 @@ COMMIT TRANSACTION;
 					sql = Console.ReadLine();			//use specified sql, or read this from console.
 					if(sql == "exit"){break;}
 
-					DataTable datatable = PUSDA.ExecuteWithResults(sql);
+					DataTable datatable = PISDA.ExecuteWithResults(sql);
 					LogDataTable(datatable);
 					Log("");
 				}
@@ -1261,7 +1261,7 @@ COMMIT TRANSACTION;
 				Log("Specified SQL-request:");
 				Log(sql+"\n");
 				Log("Results:");
-				DataTable datatable = PUSDA.ExecuteWithResults(sql);
+				DataTable datatable = PISDA.ExecuteWithResults(sql);
 				LogDataTable(datatable);
 				Log("");
 			}
@@ -1291,9 +1291,9 @@ COMMIT TRANSACTION;
 				//Define string with Usage.
 				string Usage =
 @"
-1. PUSDA.exe [""dbfilename""] [""SQLRequest""] - execute SQLRequest specified as string, and exit.
-2. PUSDA.exe [""dbfilename""] + input SQLRequests in console.
-3. PUSDA.exe (without arguments) - to run tests with ""test.db""
+1. PISDA.exe [""dbfilename""] [""SQLRequest""] - execute SQLRequest specified as string, and exit.
+2. PISDA.exe [""dbfilename""] + input SQLRequests in console.
+3. PISDA.exe (without arguments) - to run tests with ""test.db""
 
 See results in ""log.txt"".
 ";
