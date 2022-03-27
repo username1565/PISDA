@@ -1,6 +1,54 @@
 ________________________________________________________________________________________________________________
 Fresh changes - in the top of this text file.
 ________________________________________________________________________________________________________________
+
+BUILD:
+	Windows 10 (.NET 4.8):
+		csc /out:PISDA_w10.exe /reference:System.Data.SQLite.dll PISDA.cs
+			OK!
+				RUN:
+					Windows 10 (.NET 4.8):
+						PISDA_w10.exe
+							System.TypeInitializationException: ---> System.BadImageFormatException: Can not load "System.Data.SQLite, Version=1.0.115.5, Culture=neutral, PublicKeyToken=db937bc2d44ff139"
+					Linux, mono:
+						mono PISDA_w10.exe
+							System.DllNotFoundException: System.Data.SQLite.dll assembly:<unknown assembly> type:<unknown type> member:(null)
+					Windows XP (.NET 4.0):
+						PISDA_w10.exe
+							OK!
+					
+	Linux, mono:
+		csc /out:PISDA_mono.exe /reference:System.Data.SQLite.dll PISDA.cs
+			OK!
+				RUN:
+					Windows 10 (.NET 4.8):
+						PISDA_mono.exe
+							System.TypeInitializationException: ---> System.BadImageFormatException: Can not load "System.Data.SQLite, Version=1.0.115.5, Culture=neutral, PublicKeyToken=db937bc2d44ff139"
+					Linux, mono:
+						mono PISDA_mono.exe
+							System.DllNotFoundException: System.Data.SQLite.dll assembly:<unknown assembly> type:<unknown type> member:(null)
+					Windows XP (.NET 4.0):
+						PISDA_mono.exe
+							OK!
+
+	Windows XP (.NET 4.0):
+		csc /out:PISDA_XP.exe /reference:System.Data.SQLite.dll PISDA.cs
+			OK!
+				RUN:
+					Windows 10 (.NET 4.8):
+						PISDA_XP.exe
+							System.TypeInitializationException: ---> System.BadImageFormatException: Can not load "System.Data.SQLite, Version=1.0.115.5, Culture=neutral, PublicKeyToken=db937bc2d44ff139"
+					Linux, mono:
+						mono PISDA_XP.exe
+							System.DllNotFoundException: System.Data.SQLite.dll assembly:<unknown assembly> type:<unknown type> member:(null)
+					Windows XP (.NET 4.0):
+						PISDA_XP.exe
+							OK!
+
+With this dll https://system.data.sqlite.org/downloads/1.0.115.5/sqlite-netFx46-binary-bundle-Win32-2015-1.0.115.5.zip
+"PISDA.exe" is not working, too, on Windows 10 (.NET Framework 4.8, and "mono linux") - throw exceptions.
+I do not see System.Data.SQLite.dll for .NET 4.8.
+________________________________________________________________________________________________________________
 Tests will be processed on 3 operation systems:
 	Windows XP (.NET 4.0)
 	Windows 10 (.NET 4.8)
