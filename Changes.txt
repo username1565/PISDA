@@ -1,6 +1,10 @@
 ________________________________________________________________________________________________________________
 Fresh changes - in the top of this text file.
 ________________________________________________________________________________________________________________
+Windows 10 (.NET 4.8), does not contains something, and can not load "System.Data.SQLite.dll", so it's throws...
+Linux mono, using "Mono.Data.Sqlite.dll", instead of "System.Data.SQLite.dll", so it's throws...
+Windows XP, (.NET 4.0) - compilation and running of compiled program - is working OK.
+________________________________________________________________________________________________________________
 
 BUILD:
 	Windows 10 (.NET 4.8):
