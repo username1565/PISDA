@@ -1,6 +1,11 @@
 ________________________________________________________________________________________________________________
 Fresh changes - in the top of this text file.
 ________________________________________________________________________________________________________________
+Created new branch "PISDA_linux_mono", from "PISDA": https://github.com/username1565/PISDA/tree/PISDA_linux_mono
+Clone this branch, as a single branch:
+	git clone https://github.com/username1565/PISDA --branch PISDA_linux_mono --single-branch PISDA_linux_mono
+Right now, it's the same, as "PISDA".
+________________________________________________________________________________________________________________
 https://github.com/username1565/PISDA
 with latest commit hash 407374c42acb8a6015edd55336ca29b9b4056099
 and code state here: https://github.com/username1565/PISDA/tree/407374c42acb8a6015edd55336ca29b9b4056099
