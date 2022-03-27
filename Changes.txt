@@ -1,6 +1,45 @@
 ________________________________________________________________________________________________________________
 Fresh changes - in the top of this text file.
 ________________________________________________________________________________________________________________
+https://github.com/username1565/PISDA/tree/PISDA_linux_mono
+it's the same as https://github.com/username1565/PISDA/tree/407374c42acb8a6015edd55336ca29b9b4056099
+but file PISDA.cs was been rewrited with using "Mono.Data.Sqlite", instead of "System.Data.SQLite",
+and this can working with "Mono.Data.Sqlite.dll", instead of "System.Data.SQLite.dll".
+
+"Mono.Data.Sqlite.dll" was been added there, too.
+
+This can be compiled on linux, using mono, as:
+	csc /out:PISDA.exe /reference:Mono.Data.Sqlite.dll PISDA.cs
+or as
+	./build_mono.sh
+
+Also, this can be runned on linux, using mono, as:
+	mono PISDA.exe
+or as
+	./mono_run_with_sql.sh
+	
+After compilation "PISDA.exe", on linux (using mono),
+this can be runned on Windows (with .NET Framework 4.0), too,
+but probram return throw exception, about "sqlite3.dll" not found.
+
+"sqlite3.dll" - it's something like "SQLite.Interop.dll",
+and this contains inside "System.Data.SQLite.dll",
+and "Mono.Data.Sqlite.dll" using this from "sqlite3.dll".
+So "System.Data.SQLite.dll" was been renamed to "sqlite3.dll",
+and after this, "PISDA.exe", working on Windows (with .NET Framework 4.0).
+
+On Windows XP (.NET 4.0), "PISDA_linux_mono" can be sucessfully compilled and runned (with "Mono.Data.Sqlite.dll", and "sqlite3.dll"), too.
+
+But after try to run "PISDA.exe", compiled on linux (using mono),
+and after try to run this on Windows 10 (with .NET Framework 4.8, instead of .NET Framework 4.0),
+	C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe --version
+		-> 4.8.4084.0
+This program is not working on windows.
+
+________________________________________________________________________________________________________________
+Add "build_mono.sh"
+Add "mono_run_with_sql.sh"
+________________________________________________________________________________________________________________
 Add "Mono.Data.Sqlite.dll" from this source: https://dll-overhaul.com/file/mono.data.sqlite%20(2).dll/45133.html
 Add "Mono.Data.Sqlite.dll-source.txt" with hashes, and description of library.
 
