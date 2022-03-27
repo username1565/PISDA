@@ -1,6 +1,71 @@
 ________________________________________________________________________________________________________________
 Fresh changes - in the top of this text file.
 ________________________________________________________________________________________________________________
+"Mono.Data.Sqlite.dll" contains somewhere in mono, on linux,
+and not contains in Windows 10 (.NET 4.8) and Windows XP (.NET 4.0).
+
+Try to find "Mono.Data.Sqlite.dll"
+and found it there:
+/usr/lib/mono/gac/Mono.Data.Sqlite/4.0.0.0__0738eb9f132ed756/Mono.Data.Sqlite.dll - 163 KiloBytes (166 912 bytes).
+
+< \Mono.Data.Sqlite.dll >
+CRC-32: 39D72F03
+MD5: 7246932A98140E68C4763D1D955D167F
+RIPEMD-160: 32ACEFB167D5A46AB090182472342B47F7D0EB01
+SHA-1: A8E8333404E3779E3D1CB77E25294B2140AF1367
+SHA-224: 2085D5DFBD2BCBD854FB69CEB24CEF84E9611BFC2AC3EB0140E69305
+SHA-256: 3B2CC87671992BE1CD36E20E1D328AACF4C596F237575F0BC23AE8482DD5DD97
+SHA-384: 989499A4B341E599C39526477C952E561D1815B10B5B3C966E24A4925DCA6A4F9B4D10BBEADBDE619AC13B45871C43E0
+SHA-512: 59805BEBD7E0B8FAEF10D62910FEA6C49E101E604264889A79E364A0190AF5086712870171F290010CC3877774F029ECFFDB6BEED1D09F9F9056061E28254BF0
+SHA-512/224: 04CEB76DD634B18BBF6DF82A17B5F0AAEA3AFBABBC7F488820E98CB8
+SHA-512/256: 5F7C7F202131D6A4862F8AD17F1A1638E13AEC01C9E8734CD58D1512EAFA4E31
+
+Copy this file in folder "PISDA_linux_mono".
+Copy Mono.Data.Sqlite.dll-source.txt in "PISDA_linux_mono"
+
+BUILD:
+	Windows 10 (.NET 4.8):
+		csc /out:PISDA_w10.exe /reference:Mono.Data.Sqlite.dll PISDA.cs
+			OK!
+				RUN:
+					Windows 10 (.NET 4.8):
+						PISDA_w10.exe
+							System.TypeInitializationException: Инициализатор типа "Mono.Data.Sqlite.UnsafeNativeMethods" выдал исключение. ---> System.DllNotFoundException: Не удается загрузить DLL "sqlite3": Не найден указанный модуль.
+					Linux, mono:
+						mono PISDA_w10.exe
+							OK!
+					Windows XP (.NET 4.0):
+						PISDA_w10.exe
+							MissingMethodException. Method not found: "System.String System.String.Format(System.IFormatProvider, System.String, System.Object)".					
+					
+	Linux, mono:
+		csc /out:PISDA_mono.exe /reference:Mono.Data.Sqlite.dll PISDA.cs
+			OK!
+				RUN:
+					Windows 10 (.NET 4.8):
+						PISDA_mono.exe
+							System.TypeInitializationException: Инициализатор типа "Mono.Data.Sqlite.UnsafeNativeMethods" выдал исключение. ---> System.DllNotFoundException: Не удается загрузить DLL "sqlite3": Не найден указанный модуль.
+					Linux, mono:
+						mono PISDA_mono.exe
+							OK!
+					Windows XP (.NET 4.0):
+						PISDA_mono.exe
+							MissingMethodException. Method not found: "System.String System.String.Format(System.IFormatProvider, System.String, System.Object)".					
+
+	Windows XP (.NET 4.0):
+		csc /out:PISDA_XP.exe /reference:System.Data.SQLite.dll PISDA.cs
+			OK!
+				RUN:
+					Windows 10 (.NET 4.8):
+						PISDA_XP.exe
+							System.TypeInitializationException: Инициализатор типа "Mono.Data.Sqlite.UnsafeNativeMethods" выдал исключение. ---> System.DllNotFoundException: Не удается загрузить DLL "sqlite3"
+					Linux, mono:
+						mono PISDA_XP.exe
+							OK!
+					Windows XP (.NET 4.0):
+						PISDA_XP.exe
+							MissingMethodException. Method not found: "System.String System.String.Format(System.IFormatProvider, System.String, System.Object)".					
+________________________________________________________________________________________________________________
 Change in "Compile_PISDA.bat" the "System.Data.SQLite.dll" to "Mono.Data.Sqlite.dll"
 
 BUILD:
