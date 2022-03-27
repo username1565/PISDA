@@ -1,6 +1,54 @@
 ________________________________________________________________________________________________________________
 Fresh changes - in the top of this text file.
 ________________________________________________________________________________________________________________
+Add "Mono.Data.Sqlite.dll" from this source: https://dll-overhaul.com/file/mono.data.sqlite%20(2).dll/45133.html
+Add "Mono.Data.Sqlite.dll-source.txt" with hashes, and description of library.
+
+BUILD:
+	Windows 10 (.NET 4.8):
+		csc /out:PISDA_w10.exe /reference:Mono.Data.Sqlite.dll PISDA.cs
+			OK!
+				RUN:
+					Windows 10 (.NET 4.8):
+						PISDA_w10.exe
+							System.BadImageFormatException
+					Linux, mono:
+						mono PISDA_w10.exe
+							OK!
+					Windows XP (.NET 4.0):
+						PISDA_w10.exe
+							OK!
+					
+	Linux, mono:
+		csc /out:PISDA_mono.exe /reference:Mono.Data.Sqlite.dll PISDA.cs
+			OK!
+				RUN:
+					Windows 10 (.NET 4.8):
+						PISDA_mono.exe
+							System.BadImageFormatException
+					Linux, mono:
+						mono PISDA_mono.exe
+							OK!
+					Windows XP (.NET 4.0):
+						PISDA_mono.exe
+							OK!
+
+	Windows XP (.NET 4.0):
+		csc /out:PISDA_XP.exe /reference:Mono.Data.Sqlite.dll PISDA.cs
+			OK!
+				RUN:
+					Windows 10 (.NET 4.8):
+						PISDA_XP.exe
+							System.BadImageFormatException
+					Linux, mono:
+						mono PISDA_XP.exe
+							OK!
+					Windows XP (.NET 4.0):
+						PISDA_XP.exe
+							OK!
+							
+Seems like something not found in Windows 10 (.NET 4.8).
+________________________________________________________________________________________________________________
 Seems, like mono's "Mono.Data.Sqlite.dll" is not complete...
 ________________________________________________________________________________________________________________
 Rename "System.Data.SQLite.dll" to "sqlite3.dll"
