@@ -1,6 +1,21 @@
 ________________________________________________________________________________________________________________
 Fresh changes - in the top of this text file.
 ________________________________________________________________________________________________________________
+BUILD:
+	Linux, mono:
+		csc /out:PISDA_mono.exe /reference:Mono.Data.Sqlite.dll PISDA.cs
+			OK!
+				RUN:
+					Windows 10 (.NET 4.8):
+						PISDA_mono.exe
+							System.TypeInitializationException: ---> System.BadImageFormatException: Can not load "System.Data.SQLite, Version=1.0.115.5, Culture=neutral, PublicKeyToken=db937bc2d44ff139"
+					Linux, mono:
+						mono PISDA_mono.exe
+							OK!
+					Windows XP (.NET 4.0):
+						PISDA_mono.exe
+							System.TypeInitializationException: ---> System.BadImageFormatException: Can not load "System.Data.SQLite, Version=1.0.115.5, Culture=neutral, PublicKeyToken=db937bc2d44ff139"
+________________________________________________________________________________________________________________
 Change in "PISDA.cs" the "System.Data.SQLite" to "Mono.Data.Sqlite".
 ________________________________________________________________________________________________________________
 Created new branch "PISDA_linux_mono", from "PISDA": https://github.com/username1565/PISDA/tree/PISDA_linux_mono
