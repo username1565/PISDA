@@ -1,6 +1,17 @@
 ________________________________________________________________________________________________________________
 Fresh changes - in the top of this text file.
 ________________________________________________________________________________________________________________
+Change in "Compile_PISDA.bat" the "System.Data.SQLite.dll" to "Mono.Data.Sqlite.dll"
+
+BUILD:
+	Windows 10 (.NET 4.8):
+		csc /out:PISDA_w10.exe /reference:Mono.Data.Sqlite.dll PISDA.cs
+			FAIL!	Mono.Data.Sqlite.dll not found
+
+	Windows XP (.NET 4.0):
+		csc /out:PISDA_XP.exe /reference:Mono.Data.Sqlite.dll PISDA.cs
+			FAIL!	Mono.Data.Sqlite.dll not found
+________________________________________________________________________________________________________________
 BUILD:
 	Linux, mono:
 		csc /out:PISDA_mono.exe /reference:Mono.Data.Sqlite.dll PISDA.cs
