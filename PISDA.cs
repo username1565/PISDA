@@ -1,7 +1,7 @@
 using System;
 using System.IO;			//MemoryStream to get bytes of blob from reader.
 using System.Data;			//DataSet and DataTable
-using System.Data.SQLite;	//System.Data.SQLite.dll - SQLite3 with Interop, inside.
+using Mono.Data.Sqlite;
 
 /*
 PISDA - Provide Instant SQLite Data Access.
@@ -30,7 +30,7 @@ pause
 
 private static string DBFileName = @"test.db";																//set database file
 private static string ConnectionString = @"Data Source="+DBFileName+";Version=3;New=False;Compress=True";	//string to connect this db-file
-private static SQLiteConnection Connection = new SQLiteConnection(ConnectionString);						//database-connection
+private static Mono.Data.Sqlite.SqliteConnection Connection = new Mono.Data.Sqlite.SqliteConnection(ConnectionString);						//database-connection
 private statis void OpenConnectionIfNeed(){																	//open this if it's closed
 	//Console.WriteLine("Connection.State: "+Connection.State);		//show connection-stata open/close
 	if (Connection.State != System.Data.ConnectionState.Open) {		//If db-connection closed
@@ -50,8 +50,8 @@ lock (db_lock)											//lock database to do some actions
 	OpenConnectionIfNeed();								//open connection if need
 	//DataTable schema = Connection.GetSchema(arg);		//Get database-schema
 	
-	//Create new SQLiteCommand for the current, opened database-connection, and add sql-query there.
-	using(SQLiteCommand cmd = new SQLiteCommand(sql, Connection)){
+	//Create new Mono.Data.Sqlite.SqliteCommand for the current, opened database-connection, and add sql-query there.
+	using(Mono.Data.Sqlite.SqliteCommand cmd = new Mono.Data.Sqlite.SqliteCommand(sql, Connection)){
 		//Inside this using, there can executed the different methods:
 		//sql...
 		//cmd.Parameters.Add(...);	//For writting the bytes, as blog, for example
@@ -83,10 +83,10 @@ namespace PISDA
 			{
 				_DBFileName = value;
 				if (!File.Exists(DBFileName)){						//if DB-file not exists
-					SQLiteConnection.CreateFile(DBFileName);			//create this file with database
+					Mono.Data.Sqlite.SqliteConnection.CreateFile(DBFileName);			//create this file with database
 				}
 				_ConnectionString = ConnectionString;					//update connection string, with this file.
-				_Connection = new SQLiteConnection(_ConnectionString);	//and open Connection with this string.
+				_Connection = new Mono.Data.Sqlite.SqliteConnection(_ConnectionString);	//and open Connection with this string.
 				//...
 			}
 		}
@@ -120,20 +120,20 @@ namespace PISDA
 		//	set:	PISDA.ConnectionString = "value";
 
 		//Connection to database
-		private static SQLiteConnection _Connection = null;		//SQLiteConnection to database.
+		private static Mono.Data.Sqlite.SqliteConnection _Connection = null;		//Mono.Data.Sqlite.SqliteConnection to database.
 		//When this defined, then:
 		//	open - _Connection.Open(); or OpenConnectionIfNeed();
 		//	close - _Connection.Close(); or CloseConnectionIfNeed(); (+ CloseConnections = true/false);
 		//	Do not do _Connection.Open(); when this opened, else throw exception.
 		
 		//get or set value of this
-		public static SQLiteConnection Connection
+		public static Mono.Data.Sqlite.SqliteConnection Connection
 		{
-			get																	//get SQLiteConnection to the database
+			get																	//get Mono.Data.Sqlite.SqliteConnection to the database
 			{
 				if (_Connection == null)											//if connection not defined
 				{
-					_Connection = new SQLiteConnection(ConnectionString);				//generate connection string, and connect to database with this
+					_Connection = new Mono.Data.Sqlite.SqliteConnection(ConnectionString);				//generate connection string, and connect to database with this
 					_Connection.Open();													//open database, after connect to this.
 				}
 				else if (_Connection.State != System.Data.ConnectionState.Open)		//if connection already defined
@@ -143,17 +143,17 @@ namespace PISDA
 				else																//else if already opened
 				{}
 				
-				return _Connection;													//and return an opened SQLiteConnection to this database.
+				return _Connection;													//and return an opened Mono.Data.Sqlite.SqliteConnection to this database.
 				
 			}
 			set																	//or set this connection from ConnectionString (value)
 			{
-				_Connection = new SQLiteConnection(value);							//set connection with value
+				_Connection = new Mono.Data.Sqlite.SqliteConnection(value);							//set connection with value
 				_Connection.Open();													//open this
 			}
 		}
-		//	get: _cmd = new SQLiteCommand(Connection);	//connection will be opened, and _cmd will be binded.
-		//	set: Connection = new SQLiteConnection(_ConnectionString);	//create new connection from _ConnectionString
+		//	get: _cmd = new Mono.Data.Sqlite.SqliteCommand(Connection);	//connection will be opened, and _cmd will be binded.
+		//	set: Connection = new Mono.Data.Sqlite.SqliteConnection(_ConnectionString);	//create new connection from _ConnectionString
 		
 		private static bool CloseConnections = false;	//true, by default, and connection will be closed after each operation.
 		//Or false, if need to keep connection: PISDA.CloseConnections = false;
@@ -169,10 +169,10 @@ namespace PISDA
 			_Connection = Connection;	//it will be opened there, if it's closed.
 		}
 
-		private static SQLiteCommand _cmd = null;				//SQLiteCommand for opened database after connection with this.
-																//		cmd = new SQLiteCommand(sql, Connection) or cmd = new SQLiteCommand(Connection)
+		private static Mono.Data.Sqlite.SqliteCommand _cmd = null;				//Mono.Data.Sqlite.SqliteCommand for opened database after connection with this.
+																//		cmd = new Mono.Data.Sqlite.SqliteCommand(sql, Connection) or cmd = new Mono.Data.Sqlite.SqliteCommand(Connection)
 		//get or set value of this
-		public static SQLiteCommand cmd
+		public static Mono.Data.Sqlite.SqliteCommand cmd
 		{
 			get{
 				if(
@@ -180,16 +180,16 @@ namespace PISDA
 					||	_Connection == null										//or if connection not defined
 					||	_Connection.State != System.Data.ConnectionState.Open	//or if connection closed
 				){
-					_cmd = new SQLiteCommand(Connection);					//Create and open database connection, and create new SQLiteCommand for this.
+					_cmd = new Mono.Data.Sqlite.SqliteCommand(Connection);					//Create and open database connection, and create new Mono.Data.Sqlite.SqliteCommand for this.
 				}
-				return _cmd;												//or/and return that SQLiteCommand _cmd
+				return _cmd;												//or/and return that Mono.Data.Sqlite.SqliteCommand _cmd
 			}
 			set{
-				_cmd = value;	//create new SQLiteCommand with sql
+				_cmd = value;	//create new Mono.Data.Sqlite.SqliteCommand with sql
 			}
 		}
 		//	get: _cmd = PISDA.cmd; //cmd will be created, if not exists
-		//	set: cmd = new SQLiteCommand(sql, Connection); //create new and set
+		//	set: cmd = new Mono.Data.Sqlite.SqliteCommand(sql, Connection); //create new and set
 		
 
 		//object to lock database, while some command executed for this.
@@ -206,8 +206,8 @@ namespace PISDA
 
 			lock (db_lock)
 			{
-				using(cmd = new SQLiteCommand(sql, Connection)){	//create new SQLiteCommand for current connection, after open this, and add sql-query there.
-					SQLiteDataAdapter adp = new SQLiteDataAdapter(_cmd);
+				using(cmd = new Mono.Data.Sqlite.SqliteCommand(sql, Connection)){	//create new Mono.Data.Sqlite.SqliteCommand for current connection, after open this, and add sql-query there.
+					Mono.Data.Sqlite.SqliteDataAdapter adp = new Mono.Data.Sqlite.SqliteDataAdapter(_cmd);
 					adp.Fill(dataSet);
 					CloseConnectionIfNeed();
 				}
@@ -292,7 +292,7 @@ namespace PISDA
 		{
 			lock (db_lock)
 			{
-				using(cmd = new SQLiteCommand(sql, Connection)){	//create new SQLiteCommand for current connection, after open this, and add sql-query there.
+				using(cmd = new Mono.Data.Sqlite.SqliteCommand(sql, Connection)){	//create new Mono.Data.Sqlite.SqliteCommand for current connection, after open this, and add sql-query there.
 					int result = _cmd.ExecuteNonQuery();
 					CloseConnectionIfNeed();
 					
@@ -313,7 +313,7 @@ namespace PISDA
 				{
 					for (int i = 0; i < sqls.Length; i++)
 					{
-						using (cmd = new SQLiteCommand(sqls[i], _Connection))
+						using (cmd = new Mono.Data.Sqlite.SqliteCommand(sqls[i], _Connection))
 						{
 							_cmd.ExecuteNonQuery();
 						}
@@ -340,14 +340,14 @@ namespace PISDA
 //COMMIT TRANSACTION; 
 
 		//Read TEXT
-		public static System.Data.SQLite.SQLiteDataReader read(
+		public static Mono.Data.Sqlite.SqliteDataReader read(
 			string sql
 		,	bool show = false
 		)
 		{
 			lock(db_lock){
-				using(cmd = new SQLiteCommand(sql, Connection)){	//create new SQLiteCommand for current connection, after open this, and add sql-query there.
-					System.Data.SQLite.SQLiteDataReader result = _cmd.ExecuteReader();
+				using(cmd = new Mono.Data.Sqlite.SqliteCommand(sql, Connection)){	//create new Mono.Data.Sqlite.SqliteCommand for current connection, after open this, and add sql-query there.
+					Mono.Data.Sqlite.SqliteDataReader result = _cmd.ExecuteReader();
 					
 					while (result.Read()){
 						if(show == true){
@@ -372,8 +372,9 @@ namespace PISDA
 		,	bool show = false
 		)
 		{
+		//	Console.WriteLine("sql"+sql);
 			lock(db_lock){
-				using(cmd = new SQLiteCommand(sql, Connection)){	//create new SQLiteCommand for current connection, after open this, and add sql-query there.
+				using(cmd = new Mono.Data.Sqlite.SqliteCommand(sql, Connection)){	//create new Mono.Data.Sqlite.SqliteCommand for current connection, after open this, and add sql-query there.
 					if(blob != null){
 						cmd.Parameters.Add("@blob", System.Data.DbType.Binary, 20).Value = blob;		
 					}
@@ -393,7 +394,7 @@ namespace PISDA
 		{
 			lock(db_lock){
 				string sql = "INSERT OR REPLACE INTO "+TableName+" ("+columnName+") VALUES (@"+columnName+")";			
-				using(cmd = new SQLiteCommand(sql, Connection)){	//create new SQLiteCommand for current connection, after open this, and add sql-query there.
+				using(cmd = new Mono.Data.Sqlite.SqliteCommand(sql, Connection)){	//create new Mono.Data.Sqlite.SqliteCommand for current connection, after open this, and add sql-query there.
 					_cmd.Parameters.Add("@"+columnName, System.Data.DbType.Binary, 20).Value = blob;
 					int result = _cmd.ExecuteNonQuery();
 					CloseConnectionIfNeed();
@@ -410,7 +411,7 @@ namespace PISDA
 		)
 		{
 			lock(db_lock){
-				using(cmd = new SQLiteCommand(sql, Connection)){	//create new SQLiteCommand for current connection, after open this, and add sql-query there.
+				using(cmd = new Mono.Data.Sqlite.SqliteCommand(sql, Connection)){	//create new Mono.Data.Sqlite.SqliteCommand for current connection, after open this, and add sql-query there.
 					byte[] buffer = new byte[0];
 					using (var reader = _cmd.ExecuteReader())
 					{
@@ -435,7 +436,7 @@ namespace PISDA
 	
 		//get bytes from reader
 		static byte[] GetBytes(
-			SQLiteDataReader reader
+			Mono.Data.Sqlite.SqliteDataReader reader
 		)
 		{
 			if(reader.IsDBNull(0)){return null;}
@@ -460,8 +461,8 @@ namespace PISDA
 		)
 		{
 			lock(db_lock){
-				using(cmd = new SQLiteCommand(sql, Connection)){	//create new SQLiteCommand for current connection, after open this, and add sql-query there.
-					System.Data.SQLite.SQLiteDataReader dataReader = cmd.ExecuteReader();
+				using(cmd = new Mono.Data.Sqlite.SqliteCommand(sql, Connection)){	//create new Mono.Data.Sqlite.SqliteCommand for current connection, after open this, and add sql-query there.
+					Mono.Data.Sqlite.SqliteDataReader dataReader = cmd.ExecuteReader();
 					DataTable dTable = new DataTable();
 					dTable.Load(dataReader);
 					CloseConnectionIfNeed();
@@ -584,7 +585,7 @@ namespace PISDA
 					}
 					sql +=");"; //end of set SQL-command
 
-					using(cmd = new SQLiteCommand(sql, Connection)){	//create new SQLiteCommand for current connection, after open this, and add sql-query there.
+					using(cmd = new Mono.Data.Sqlite.SqliteCommand(sql, Connection)){	//create new Mono.Data.Sqlite.SqliteCommand for current connection, after open this, and add sql-query there.
 						//Add values, as parameters:
 						if(values != null){		//if object with values with dynamic types is specified
 							for(;i<values.Length; i++){		//for each item
@@ -614,7 +615,7 @@ namespace PISDA
 		{
 			try{
 				lock(db_lock){
-					using(cmd = new SQLiteCommand(sql, Connection)){	//create new SQLiteCommand for current connection, after open this, and add sql-query there.
+					using(cmd = new Mono.Data.Sqlite.SqliteCommand(sql, Connection)){	//create new Mono.Data.Sqlite.SqliteCommand for current connection, after open this, and add sql-query there.
 						object value = _cmd.ExecuteScalar();
 						CloseConnectionIfNeed();
 						if (value != null)
@@ -627,13 +628,13 @@ namespace PISDA
 							return value;	//return as an object with dynamic type
 						}
 						//return string.Empty;	//else empty-string null
-						return null;			//or null.
+						return DBNull.Value;			//or null.
 					}
 				}
 			}
 			catch(Exception ex){
-				Console.WriteLine(ex);
-				return ex.ToString();
+				Console.WriteLine("PISDA.PISDA.ExecuteScalar: sql: "+sql+", ex: "+ex);
+				return DBNull.Value;
 			}
 		}
 
@@ -855,9 +856,9 @@ COMMIT TRANSACTION;
 			//read table, and show records:
 			try
 			{
-				System.Data.SQLite.SQLiteDataReader dr = read("SELECT * FROM cars");
+				Mono.Data.Sqlite.SqliteDataReader dr = read("SELECT * FROM cars");
 			}
-			catch (SQLiteException ex)
+			catch (Mono.Data.Sqlite.SqliteException ex)
 			{
 				Console.WriteLine("Error: " + ex.Message);
 			}
