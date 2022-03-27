@@ -1,6 +1,25 @@
 ________________________________________________________________________________________________________________
 Fresh changes - in the top of this text file.
 ________________________________________________________________________________________________________________
+https://github.com/username1565/PISDA
+with latest commit hash 407374c42acb8a6015edd55336ca29b9b4056099
+and code state here: https://github.com/username1565/PISDA/tree/407374c42acb8a6015edd55336ca29b9b4056099
+this can be compiled on
+	Windows XP (.NET Framework 4.0),
+	Windows 10 (.NET Framework 4.8),
+		by run file "Compile_PISDA.bat".
+
+Also, this can be compiled on linux (using mono):
+csc /out:PISDA_mono.exe /reference:System.Data.SQLite.dll PISDA.cs
+
+But this can not be runned on linux, as "mono PISDA.exe"
+and return throw-exception.
+
+This can not be runned on Windows 10 (with .NET Framework 4.8), and return throw-exception.
+
+This can be runned on Windows XP, with .NET Framework 4.0, and this is working,
+after compilation on windows (Windows XP, and Windows 10) or linux (using mono).
+________________________________________________________________________________________________________________
 Windows 10 (.NET 4.8), does not contains something, and can not load "System.Data.SQLite.dll", so it's throws...
 Linux mono, using "Mono.Data.Sqlite.dll", instead of "System.Data.SQLite.dll", so it's throws...
 Windows XP, (.NET 4.0) - compilation and running of compiled program - is working OK.
