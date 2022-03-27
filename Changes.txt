@@ -1,6 +1,13 @@
 ________________________________________________________________________________________________________________
 Fresh changes - in the top of this text file.
 ________________________________________________________________________________________________________________
+Tests will be processed on 3 operation systems:
+	Windows XP (.NET 4.0)
+	Windows 10 (.NET 4.8)
+	Linux (using mono, Mono JIT compiler version 6.12.0.122)
+	
+Compiling and run the compiled program.
+________________________________________________________________________________________________________________
 Clone "PISDA":
 	git clone https://github.com/username1565/PISDA --branch PISDA --single-branch PISDA
 ________________________________________________________________________________________________________________
