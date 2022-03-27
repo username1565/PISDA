@@ -1,6 +1,53 @@
 ________________________________________________________________________________________________________________
 Fresh changes - in the top of this text file.
 ________________________________________________________________________________________________________________
+Download https://system.data.sqlite.org/downloads/1.0.115.5/sqlite-netFx46-static-binary-bundle-x64-2015-1.0.115.5.zip
+Unpack.
+Rename "System.Data.SQLite.dll" to "sqlite3.dll"
+
+BUILD:
+	Windows 10 (.NET 4.8):
+		csc /out:PISDA_w10.exe /reference:Mono.Data.Sqlite.dll PISDA.cs
+			OK!
+				RUN:
+					Windows 10 (.NET 4.8):
+						PISDA_w10.exe
+							OK!
+					Linux, mono:
+						mono PISDA_w10.exe
+							OK!
+					Windows XP (.NET 4.0):
+						PISDA_w10.exe
+							System.BadImageFormatException
+					
+	Linux, mono:
+		csc /out:PISDA_mono.exe /reference:Mono.Data.Sqlite.dll PISDA.cs
+			OK!
+				RUN:
+					Windows 10 (.NET 4.8):
+						PISDA_mono.exe
+							OK!
+					Linux, mono:
+						mono PISDA_mono.exe
+							OK!
+					Windows XP (.NET 4.0):
+						PISDA_mono.exe
+							System.BadImageFormatException
+
+	Windows XP (.NET 4.0):
+		csc /out:PISDA_XP.exe /reference:Mono.Data.Sqlite.dll PISDA.cs
+			OK!
+				RUN:
+					Windows 10 (.NET 4.8):
+						PISDA_XP.exe
+							OK!
+					Linux, mono:
+						mono PISDA_XP.exe
+							OK!
+					Windows XP (.NET 4.0):
+						PISDA_XP.exe
+							System.BadImageFormatException
+________________________________________________________________________________________________________________
 https://github.com/username1565/PISDA/tree/PISDA_linux_mono
 it's the same as https://github.com/username1565/PISDA/tree/407374c42acb8a6015edd55336ca29b9b4056099
 but file PISDA.cs was been rewrited with using "Mono.Data.Sqlite", instead of "System.Data.SQLite",
