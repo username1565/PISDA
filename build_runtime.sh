@@ -41,4 +41,4 @@ make
 
 echo ""
 echo ""
-echo "check out binary files there: \mono\mcs\class\lib\net_4_x-linux\"
+echo "Check out binary files there: \\ mono \\ mcs \\ class \\ lib \\ net_4_x-linux \\"
